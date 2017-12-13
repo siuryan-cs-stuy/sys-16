@@ -11,16 +11,21 @@
   returns the file descriptor for the upstream pipe.
   =========================*/
 int server_handshake(int *to_client) {
+  
+  //Step 1.1
   mkfifo("wkp", 0644);
   printf("[server] created wkp\n");
   int wkp = open("wkp", O_RDONLY);
   printf("[server] opened wkp\n");
   char pipe_name[64];
+
+  //Step 2.3
   read(wkp, &pipe_name, sizeof(pipe_name));
   printf("[server] pipe_name: %s\n", pipe_name);
-  remove("WKP");
+  remove("wkp");
   printf("[server] WKP removed\n");
 
+  //Step 2.4
   *to_client = open(pipe_name, O_WRONLY, 0644);
   printf("[server] writing %s\n", ACK);
   write(*to_client, ACK, sizeof(int));
@@ -50,14 +55,19 @@ int client_handshake(int *to_server) {
   int pid = getpid();
   char pipe_name[64];
   sprintf(pipe_name, "pipe_%d", pid);
+
+  //Step 1.2
   mkfifo(pipe_name, 0644);
   printf("[client] made pipe %s\n", pipe_name);
 
+  //Step 2.1
   *to_server = open("wkp", O_WRONLY, 0644);
   printf("[client] opened wkp\n");
   printf("[client] writing %s\n", pipe_name);
   write(*to_server, &pipe_name, sizeof(pipe_name));
+  //Step 2.2
 
+  //Step 2.4
   int priv = open(pipe_name, O_RDONLY, 0644);
   printf("[client] opened pipe %s\n", pipe_name);
 
@@ -68,6 +78,7 @@ int client_handshake(int *to_server) {
     return 1;
 
   }
+  //Step 2.5?
   printf("[client] read %d\n", res);
   remove(pipe_name);
   printf("[client] removed %s\n", pipe_name);
