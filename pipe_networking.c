@@ -18,7 +18,7 @@ int server_handshake(int *to_client) {
   char pipe_name[64];
   read(wkp, &pipe_name, sizeof(pipe_name));
   printf("[server] pipe_name: %s\n", pipe_name);
-  remove("WKP");
+  remove("wkp");
   printf("[server] WKP removed\n");
 
   *to_client = open(pipe_name, O_WRONLY, 0644);
