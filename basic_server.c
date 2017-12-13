@@ -16,4 +16,6 @@ int main() {
     strcat(message, "testing");
     write(to_client, message, sizeof(message));
   }
+
+  return 0;
 }

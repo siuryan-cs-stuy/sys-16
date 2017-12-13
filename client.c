@@ -15,9 +15,18 @@ int main() {
     fgets(input, sizeof(input), stdin);
     input[strlen(input)-1] = 0;
 
+    if (strcmp(input, "") == 0) {
+      break;
+    }
+
     write(to_server, input, sizeof(input));
     read(from_server, server_response, sizeof(server_response));
     printf("[server] %s", server_response);
     printf("\n");
   }
+
+  close(to_server);
+  close(from_server);
+
+  return 0;
 }
