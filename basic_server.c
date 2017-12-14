@@ -1,5 +1,6 @@
 #include "pipe_networking.h"
 
+void camelCase(char *);
 
 int main() {
 
@@ -13,9 +14,20 @@ int main() {
     read(from_client, message, sizeof(message));
     printf("[client] %s\n", message);
 
-    strcat(message, "testing");
+    camelCase(message);
     write(to_client, message, sizeof(message));
   }
 
   return 0;
+}
+
+void camelCase(char *message) {
+  unsigned int i;
+  for (i = 0; i < strlen(message); i++) {
+    if (i % 2 == 0) {
+      message[i] = toupper(message[i]);
+    } else {
+      message[i] = tolower(message[i]);
+    }
+  }
 }
