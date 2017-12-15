@@ -6,16 +6,19 @@ int main() {
 
     int to_client;
     int from_client;
+    char message[BUFFER_SIZE];
 
-    from_client = server_handshake( &to_client );
+    while (1) {
+        from_client = server_handshake( &to_client );
 
-    while(1) {
-        char message[256];
-        read(from_client, message, sizeof(message));
-        printf("[client] %s\n", message);
+        while(read(from_client, message, sizeof(message))) {
+            printf("[client] %s\n", message);
 
-        camelCase(message);
-        write(to_client, message, sizeof(message));
+            camelCase(message);
+            write(to_client, message, sizeof(message));
+        }
+
+        printf("[client] exited\n");
     }
 
     return 0;

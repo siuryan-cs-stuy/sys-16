@@ -11,8 +11,8 @@ int main() {
   printf("Press [ENTER] to exit.\n");
 
   while(1) {
-    char input[256];
-    char server_response[256];
+    char input[BUFFER_SIZE];
+    char server_response[BUFFER_SIZE];
     printf(">> ");
     fgets(input, sizeof(input), stdin);
     input[strlen(input)-1] = 0;
