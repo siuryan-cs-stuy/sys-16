@@ -39,6 +39,7 @@ int server_handshake(int *to_client) {
         return 1;
     }
     printf("[server] read %s\n", response);
+    printf("[server] client connected\n");
     return wkp;
 }
 
@@ -87,5 +88,6 @@ int client_handshake(int *to_server) {
     int msg = 0;
     printf("[client] writing %d\n", msg);
     write(*to_server, &msg, sizeof(int));
+    printf("[client] connected to server\n");
     return private;
 }

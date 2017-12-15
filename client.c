@@ -7,6 +7,8 @@ int main() {
   int from_server;
 
   from_server = client_handshake( &to_server );
+  printf("\n");
+  printf("Press [ENTER] to exit.\n");
 
   while(1) {
     char input[256];
